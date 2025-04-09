@@ -1,8 +1,8 @@
 # AIVO: Advanced Intelligent Virtual Orator 🤖🎙️
 
 **Authors:**
-* DIANA LIZ KURIAKOSE (CHN21CS046)
 * MOHAMMED HISHAM (CHN21CS085)
+* DIANA LIZ KURIAKOSE (CHN21CS046)
 * MARIA JOSHY (CHN21CS080)
 * NANDANA VINOD (CHN21CS094)
 
@@ -56,7 +56,7 @@ AIVO employs a Retrieval-Augmented Generation (RAG) pipeline:
     * `Milvus DB` performs a similarity search to find the top relevant document chunks.
 6.  **Answer Generation:** The retrieved chunks provide context to the `Qwen 2.5 32b` Large Language Model (via Hugging Face Inference API) to generate a comprehensive, accurate answer.
 7.  **Output:** The answer is presented as text and optionally converted to speech using `Kokoro`.
-8.  **Interface:** A web-based frontend (HTML, CSS, JS) interacts with the Python backend (FastAPI/Flask) via APIs.
+8.  **Interface:** A web-based frontend (HTML, CSS, JS) interacts with the Python backend (Flask) via APIs.
 
 *(Refer to Figure 4.1 in the project report for a visual diagram)*
 
@@ -68,7 +68,7 @@ AIVO employs a Retrieval-Augmented Generation (RAG) pipeline:
     * **Speech-to-Text:** Whisper Large (OpenAI via Hugging Face)
     * **Text-to-Speech:** Kokoro
 * **Vector Database:** Milvus
-* **Backend:** Python (3.10+), FastAPI (likely), PyTorch
+* **Backend:** Python (3.10+), Flask, PyTorch
 * **Frontend:** HTML5, CSS3, JavaScript, Fetch API
 * **Libraries:** Hugging Face Transformers
 * **Tools:** Docker (for Milvus deployment, potentially application), FFmpeg (audio processing dependency for Whisper)
@@ -116,7 +116,7 @@ AIVO employs a Retrieval-Augmented Generation (RAG) pipeline:
     ```bash
     pip install -r requirements.txt
     ```
-    *(Ensure `requirements.txt` includes FastAPI/Uvicorn, requests, huggingface_hub, transformers, torch, librosa, soundfile, pymilvus, etc.)*
+    
 
 6.  **Configuration:**
     * Create a `.env` file (copy from a `.env.example` if provided).
@@ -124,6 +124,7 @@ AIVO employs a Retrieval-Augmented Generation (RAG) pipeline:
         * Milvus connection details (Host, Port)
         * Hugging Face API Token (if using Inference API for Qwen/Whisper)
         * Paths to local models if not using APIs
+        * Flask specific settings (e.g., `FLASK_APP`, `FLASK_ENV`)
         * Other settings
 
 7.  **Data Loading & Embedding (Run necessary scripts):**
@@ -132,17 +133,25 @@ AIVO employs a Retrieval-Augmented Generation (RAG) pipeline:
         * Chunk the data (respecting model token limits).
         * Generate embeddings using `BAAI/bge-large-en-v1.5`.
         * Insert the embeddings into your Milvus collection.
-    * Example (conceptual): `python load_data.py --data_dir path/to/markdown/files`
+    * Example : `python load_data.py --data_dir path/to/markdown/files`
 
 8.  **Run the Backend Server:**
-    * Assuming FastAPI with Uvicorn:
+    
         ```bash
-        uvicorn main:app --reload --host 0.0.0.0 --port 8000
+        # On Windows
+        set FLASK_APP=server.py
+        # On macOS/Linux
+        export FLASK_APP=your_main_script.py
         ```
-        *(Replace `main:app` with your actual Python file and FastAPI app instance)*
+        
+    * Run the Flask development server:
+        ```bash
+        flask run --host=0.0.0.0 --port=8000
+        ```
+        
 
 9.  **Access the Frontend:**
-    * Open your web browser and navigate to `http://localhost:xxxx` (the port where the frontend is served, which might be the same as the backend if using FastAPI templates, or a different one if it's a separate JS build).
+    * Open your web browser and navigate to `http://localhost:8000`.
 
 ## ▶️ Usage
 
@@ -185,14 +194,13 @@ Contributions are welcome! Please follow standard GitHub practices:
 5.  Push to the branch (`git push origin feature/YourFeatureName`).
 6.  Open a Pull Request with a clear description of your changes.
 
-
 ## 🙏 Acknowledgements
 
 * Guidance from Project Coordinator Smt. Syama S, Assistant Professor, College of Engineering Chengannur.
 * College of Engineering Chengannur for providing facilities and support.
 * Authors of referenced papers and creators of the open-source models and tools used.
 * A survey paper based on the initial research for this project was published:
-    * *Mohammed Hisham, Nandana Vinod, Diana Liz Kuriakose, Maria Joshy, Syama S. "Survey on Generative AI in Education." International Journal of Advances in Engineering and Management (IJAEM), Volume 6, Issue 11, pp: 615-620, Nov. 2024.* ([Link if available](https://www.ijaem.net/issue_dcp/Survey%20on%20Generative%20AI%20in%20Education.pdf))
+    * *Mohammed Hisham, Nandana Vinod, Diana Liz Kuriakose, Maria Joshy, Syama S. "Survey on Generative AI in Education." International Journal of Advances in Engineering and Management (IJAEM), Volume 6, Issue 11, pp: 615-620, Nov. 2024.* ([Link](https://www.ijaem.net/issue_dcp/Survey%20on%20Generative%20AI%20in%20Education.pdf))
 
 ## 📞 Contact
 
