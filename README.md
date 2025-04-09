@@ -206,4 +206,3 @@ Contributions are welcome! Please follow standard GitHub practices:
 
 Project Link: [https://github.com/Hisham1404/AIVO](https://github.com/Hisham1404/AIVO)
 
-*(Optional: Add contact details for the authors/maintainers)*
