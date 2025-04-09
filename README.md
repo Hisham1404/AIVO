@@ -1,1 +1,1 @@
-# AIVO
+# AIVO (advanced intelligent virtual orator)
